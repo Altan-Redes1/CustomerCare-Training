@@ -394,8 +394,9 @@ greeting:{cat:'APERTURA',tipo:'opts',label:'Apertura · Presentación y bienveni
   opts:[
     {t:'Buenos días, gracias por comunicarse. Mi nombre es [Agente] y con mucho gusto le voy a apoyar a resolver esta situación. Para poder localizar su línea en sistema, ¿me podría compartir su número de teléfono y su nombre?',q:'buena',a:'client',replyKey:'pedir_numero',fb:'✓ Perfecto. Te presentas, muestras disposición y pides número y nombre juntos para localizar al cliente en sistema y personalizar la atención desde el inicio.'},
     {t:'Buen día, gracias por comunicarse a Tu Telefonía. Le atiende [Agente]. Entiendo su situación, con gusto vamos a revisarlo. ¿Me permite su número de línea y su nombre para buscarle en sistema?',q:'buena',a:'client',replyKey:'pedir_numero',fb:'✓ Correcto. Presentación completa, reconocimiento del problema y solicitud de número y nombre de forma natural en un solo paso.'},
-    {t:'Sí, dígame. ¿Cuál es su número?',q:'mala',a:'client',replyKey:'greeting',fb:'✗ Falta presentación con nombre del agente, saludo cálido y solicitud del nombre del cliente. El agente debe presentarse y pedir número y nombre juntos.'},
-    {t:'¿Bueno? ¿Su número de teléfono?',q:'mala',a:'client',replyKey:'greeting',fb:'✗ Apertura brusca sin presentación ni nombre del agente. Siempre presentarse, reconocer el problema y pedir número y nombre del cliente en la misma pregunta.'},
+    {t:'Con mucho gusto le apoyo. Para comenzar, ¿me puede decir cuál es el modelo de su equipo?',q:'mala',a:'client',replyKey:'greeting',fb:'✗ El modelo del equipo no es lo primero que se solicita. Antes hay que presentarse, pedir el número de línea y el nombre para localizar al cliente en sistema.'},
+    {t:'Buenos días. Le atiende [Agente]. Para poder ayudarle, primero necesito que me indique desde cuándo tiene el problema.',q:'mala',a:'client',replyKey:'greeting',fb:'✗ Antes de preguntar el contexto del problema hay que localizar al cliente en sistema. Primero solicitar número de línea y nombre.'},
+    {t:'Gracias por comunicarse. Entiendo que tiene un problema con su servicio. ¿Me puede confirmar si ya intentó reiniciar su dispositivo?',q:'mala',a:'client',replyKey:'greeting',fb:'✗ El reinicio no es el primer paso ni hay que preguntarlo antes de identificar al cliente. Primero presentarse, tomar número y nombre, localizar en sistema.'},
   ]},
 
 pedir_numero:{cat:'APERTURA',tipo:'opts',label:'Apertura · Confirmar localización en sistema',ts:'Confirmar línea localizada en sistema',
@@ -403,8 +404,9 @@ pedir_numero:{cat:'APERTURA',tipo:'opts',label:'Apertura · Confirmar localizaci
   opts:[
     {t:'Muchas gracias, [nombre del cliente]. Ya le localicé en sistema. Con gusto le atiendo. ¿Me puede comentar desde cuándo tiene este problema y si es la primera vez que le ocurre?',q:'buena',a:'client',replyKey:'sondeo_contexto',fb:'✓ Perfecto. Confirmas la localización, personalizas con el nombre y arrancas el sondeo de contexto en el mismo paso. Flujo muy natural.'},
     {t:'Perfecto, [nombre]. Ya le tengo en sistema. ¿Desde cuándo tiene esta situación y le ha ocurrido antes?',q:'buena',a:'client',replyKey:'sondeo_contexto',fb:'✓ Correcto. Confirmas, usas el nombre y abres el contexto del problema de forma directa.'},
-    {t:'Espere mientras busco su número en el sistema.',q:'neutra',a:'none',fb:'⚠ Correcto pero frío y sin continuidad. Confirma que ya lo tienes, usa su nombre y aprovecha para preguntar el contexto del problema en el mismo paso.'},
-    {t:'No encuentro su número. ¿Está seguro que es de esta empresa?',q:'mala',a:'none',fb:'✗ No cuestiones al cliente sin verificar bien. Si no aparece, verifica el número exacto antes de concluir que no existe.'},
+    {t:'Muchas gracias. Ya le tengo en sistema. Para agilizar el proceso, ¿me puede decir si ya reinició su equipo antes de llamar?',q:'mala',a:'none',fb:'✗ El reinicio no es parte del sondeo inicial. Después de localizar al cliente en sistema el siguiente paso es preguntar el contexto del problema: cuándo empezó, si es primera vez.'},
+    {t:'Gracias. Ya le localicé. Le comento que para este tipo de reportes normalmente el problema se resuelve reiniciando el equipo, ¿ya lo intentó?',q:'mala',a:'none',fb:'✗ No se puede anticipar un diagnóstico antes de hacer el sondeo. El siguiente paso es preguntar contexto y tipo de afectación, no sugerir soluciones sin información.'},
+    {t:'Perfecto. Ya le veo en sistema. Antes de continuar necesito verificar si su equipo es compatible con nuestra red.',q:'mala',a:'none',fb:'✗ La validación del equipo viene después del sondeo, no inmediatamente después de localizar al cliente. El orden es: sondeo → 4 validaciones → TS.'},
   ]},
 
 sondeo_contexto:{cat:'SONDEO',tipo:'libre',label:'Sondeo 1 · Contexto del problema',ts:'Sondeo: cuándo / primera vez / lugar',
@@ -436,7 +438,9 @@ empatia_inicial:{cat:'EMPATÍA',tipo:'opts',label:'Empatía · Reconocer y valid
     {t:'Entiendo perfectamente, qué situación tan incómoda. Lamento que esté teniendo este inconveniente con su servicio. Le aseguro que haré todo lo que esté de mi parte para resolverlo con usted el día de hoy.',q:'buena',a:'client',fb:'✓ Excelente. Reconoces el problema, validas la molestia del cliente y generas confianza con un compromiso real.'},
     {t:'Con gusto le apoyo. Entiendo que esta situación le está generando un inconveniente y vamos a trabajar juntos para solucionarlo.',q:'buena',a:'client',fb:'✓ Correcto. Empatía genuina y disposición de trabajo conjunto con el cliente.'},
     {t:'Sí señor/señora, entendido. Voy a revisar.',q:'neutra',a:'client',fb:'⚠ Es correcto pero muy frío. Agrega una frase de reconocimiento antes de actuar: "Entiendo que es incómodo no tener servicio..."'},
-    {t:'Eso no debería pasar. Vamos a ver qué pasó.',q:'mala',a:'client',fb:'✗ La frase "eso no debería pasar" puede generar desconfianza. Mejor: "Entiendo lo incómodo que es, con gusto lo revisamos."'},
+    {t:'Le escucho, don/doña [nombre]. Eso es muy frustrante. Voy a escalar su caso de inmediato al área técnica para que lo resuelvan.',q:'mala',a:'client',fb:'✗ La escalación al área técnica no es el siguiente paso. Antes hay que completar el sondeo, las 4 validaciones y el TS completo. Escalar sin intentar resolver es un error de proceso.'},
+    {t:'Entiendo la situación. Para agilizar le voy a pedir que mientras hablamos intente reiniciar su dispositivo.',q:'mala',a:'client',fb:'✗ El reinicio no es parte del flujo estándar ni se pide durante la empatía. El siguiente paso después de validar emocionalmente es continuar con el sondeo del problema.'},
+    {t:'Con mucho gusto. Lamento lo ocurrido. Para que no le vuelva a pasar le voy a explicar cómo configurar su equipo.',q:'mala',a:'client',fb:'✗ Antes de cualquier configuración hay que completar el sondeo y las 4 validaciones. No se puede saltar al TS sin la información necesaria del caso.'},
   ]},
 
 /* ── 4 VALIDACIONES BÁSICAS ── */
@@ -445,8 +449,9 @@ val_equipo:{cat:'VALIDACIÓN 1',tipo:'opts',label:'Validación 1 · Equipo compa
   opts:[
     {t:'Un momento, voy a verificar en sistema si su dispositivo está homologado para nuestra red. Para eso necesito el modelo de su equipo, ¿me lo podría indicar?',q:'buena',a:'system',sys:'equipo',fb:'✓ Correcto. Explicas al cliente para qué pides el dato y consultas el sistema.'},
     {t:'Permítame un momento, estoy revisando en sistema la compatibilidad de su equipo con la red.',q:'buena',a:'system',sys:'equipo',fb:'✓ Correcto. Le indicas al cliente que estás verificando en sistema.'},
-    {t:'Todos los equipos que vendemos son compatibles, eso no es el problema.',q:'mala',a:'none',fb:'✗ No todos los equipos están homologados para la red B28. Primera validación obligatoria.'},
-    {t:'¿Cuál es su equipo? Si es viejo puede ser el problema.',q:'mala',a:'none',fb:'✗ Diagnóstico sin verificar en sistema y tono inadecuado. Siempre validar en sistema con el modelo exacto.'},
+    {t:'Voy a revisar en sistema el estado de su línea para verificar que no haya ninguna suspensión.',q:'mala',a:'system',sys:'view360',fb:'✗ La validación de la línea es el paso 3, no el primero. El orden es: 1.Equipo → 2.Oferta → 3.SIM → 4.Cobertura. Hay que verificar la compatibilidad del equipo antes.'},
+    {t:'Permítame un momento, estoy verificando si hay alguna incidencia de red en su zona.',q:'mala',a:'none',fb:'✗ La cobertura es la validación 4, no la primera. El flujo comienza con la compatibilidad del equipo. Ir a cobertura primero omite 3 validaciones obligatorias.'},
+    {t:'Entendido. ¿Me puede decir si ha tenido este equipo desde hace mucho tiempo o es reciente?',q:'mala',a:'none',fb:'✗ La antigüedad del equipo no determina la compatibilidad. Lo que importa es verificar en sistema si el modelo está homologado para la red B28, independientemente de cuándo fue adquirido.'},
   ]},
 
 val_oferta:{cat:'VALIDACIÓN 2',tipo:'opts',label:'Validación 2 · Oferta Comercial Vigente',ts:'2. Oferta Comercial vigente',
@@ -454,8 +459,9 @@ val_oferta:{cat:'VALIDACIÓN 2',tipo:'opts',label:'Validación 2 · Oferta Comer
   opts:[
     {t:'Permítame revisar en sistema que su plan esté activo y con los recursos disponibles para el servicio que reporta.',q:'buena',a:'system',sys:'saldo',fb:'✓ Correcto. Verificas en sistema sin pedir al cliente que adivine el estado de su plan.'},
     {t:'Estoy verificando su Oferta Comercial en sistema para confirmar que esté vigente y con los recursos correctos.',q:'buena',a:'system',sys:'saldo',fb:'✓ Correcto. Le informas al cliente qué estás revisando mientras lo haces.'},
-    {t:'¿Sabe usted si su plan está vigente?',q:'mala',a:'none',fb:'✗ El cliente no lo sabe con certeza. Esta información se consulta en sistema, no se le pregunta al cliente.'},
-    {t:'Si está al corriente en sus pagos el plan estará activo, continuemos.',q:'mala',a:'none',fb:'✗ No se puede asumir. Los planes pueden vencerse o tener recursos agotados sin morosidad. Siempre verificar.'},
+    {t:'Permítame revisar en sistema si su dispositivo tiene restricciones de uso de datos por parte del plan.',q:'mala',a:'system',sys:'saldo',fb:'✗ Las restricciones de datos no son lo que se verifica en esta validación. Lo que se confirma es que la Oferta Comercial esté vigente y con recursos disponibles (minutos, datos, SMS).'},
+    {t:'Voy a verificar en sistema si hay algún cargo adicional pendiente que pueda estar afectando su servicio.',q:'mala',a:'none',fb:'✗ Los cargos adicionales no son parte de esta validación. Se verifica que la Oferta Comercial tenga los recursos correctos para el servicio que reporta el cliente.'},
+    {t:'Ya que el equipo está homologado, podemos continuar directamente con el diagnóstico técnico.',q:'mala',a:'none',fb:'✗ Después de validar el equipo sigue la Oferta Comercial como segunda validación obligatoria. No se puede saltar al diagnóstico técnico sin completar las 4 validaciones.'},
   ]},
 
 val_sim:{cat:'VALIDACIÓN 3',tipo:'opts',label:'Validación 3 · SIM activa – Estado del servicio',ts:'3. SIM activa (Estado del servicio)',
@@ -502,6 +508,7 @@ ts_selector:{cat:'TS · CONFIGURACIÓN',tipo:'opts',label:'TS · Seleccionar con
     {t:'Aplicaré el flujo: Configurar Centro de Mensajes SMSC (+525584611810) desde los ajustes de la app de mensajes → Verificar con cliente.',q:(f==='sms'||f==='sms_a2p')?'buena':'mala',a:'client',fb:(f==='sms'||f==='sms_a2p')?'✓ Correcto. Flujo oficial Altán Falla de SMS: Configurar SMSC +525584611810 (con signo +) → Verificar → Ticket si persiste.':'✗ Este flujo corresponde a Falla de SMS. El escenario del cliente es diferente — selecciona el flujo correcto.'},
     {t:'Voy a hacer los mismos pasos para cualquier falla, siempre empiezo por el APN.',q:'mala',a:'none',fb:'✗ Cada tipo de falla tiene su propio flujo oficial. No es el mismo procedimiento para datos, llamadas, SMS o falla total.'},
     {t:'No le funciona nada, voy directo a restablecer de fábrica.',q:'mala',a:'none',fb:'✗ El restablecimiento de fábrica nunca es el primer paso. Primero se sigue el flujo completo según el escenario. Fábrica solo si el área técnica lo indica tras el ticket.'},
+    {t:'Aplicaré el flujo: 1) Forzar Red 4G → 2) Activar VoLTE → 3) Configurar APN IMS → 4) Activar Datos → Verificar con cliente.',q:'mala',a:'none',fb:'✗ Este flujo mezcla pasos de Falla de Llamadas con un orden incorrecto. Cada escenario tiene su propio flujo y sus propios pasos en el orden correcto.'},
   ];}},
 
 /* ═══ TS DATOS — pasos individuales ═══ */
@@ -529,7 +536,7 @@ datos_apn:{cat:'TS · PASO 3',tipo:'opts',label:'TS Datos 3 · Verificar APN del
     {t:'Vamos con el siguiente paso. Necesito que entre a Configuraciones, luego a Redes Móviles o Conexiones, y busque una opción que diga Nombres de Punto de Acceso o APN. Ahí dígame qué nombre aparece configurado para verificar que sea el correcto de su operador.',q:'buena',a:'client',fb:'✓ Excelente. Identificas el APN actual antes de corregir. El correcto para la red Altán es www.MVNO.com o el que indique el OMV.'},
     {t:'El siguiente paso es revisar la configuración de acceso a internet. Vaya a Ajustes, luego a Redes o Conexiones, y busque Punto de Acceso o APN. Dígame qué nombre aparece ahí para verificar si es el correcto.',q:'buena',a:'client',fb:'✓ Correcto. Ruta guiada para identificar el APN actual.'},
     {t:'¿Sabe cuál es su APN? Díganoslo para verificarlo.',q:'mala',a:'client',fb:'✗ El cliente no conoce el término APN. El agente debe guiarlo para encontrarlo en el dispositivo, no pedírselo directamente.'},
-    {t:'El APN lo configura la red automáticamente al insertar la SIM.',q:'mala',a:'none',fb:'✗ No siempre. El APN puede estar incorrecto por múltiples razones. El flujo oficial indica verificarlo y corregirlo si es necesario.'},
+    {t:'Para revisar el APN entre a Ajustes, luego a Aplicaciones, busque su operador y dentro encontrará la configuración.',q:'mala',a:'client',fb:'✗ El APN no se configura desde las aplicaciones. La ruta correcta es: Ajustes → Redes Móviles → Nombres de Punto de Acceso.'},
   ]},
 
 datos_apn_corregir:{cat:'TS · PASO 3B',tipo:'opts',label:'TS Datos 3B · Configurar APN correcto (www.MVNO.com)',ts:'TS: configurar APN correcto del OMV',
@@ -546,8 +553,8 @@ datos_restablecer:{cat:'TS · PASO 4',tipo:'opts',label:'TS Datos 4 · Restablec
   opts:[
     {t:'Vamos con el último paso de configuración. Lo que haremos es limpiar únicamente las configuraciones de red de su dispositivo, esto muchas veces resuelve la falla. No se preocupe, no afecta sus fotos, contactos ni aplicaciones. Entre a Ajustes, busque Sistema o Administración general, luego Restablecer, y seleccione Restablecer configuración de red. Hecho eso, pruebe navegar.',q:'buena',a:'client',fb:'✓ Correcto. Paso 4 del flujo oficial: restablecer ajustes de red (no fábrica) y replicar escenario.'},
     {t:'Un paso más. En Ajustes busque Sistema o Administración, luego Restablecer, y seleccione Restablecer ajustes de red. Esto limpia solo la configuración de red sin borrar nada personal. Avíseme cuando lo haya hecho.',q:'buena',a:'client',fb:'✓ Correcto. Ruta clara, tranquiliza al cliente y espera confirmación.'},
-    {t:'Haga un restablecimiento de fábrica completo para limpiar todo.',q:'mala',a:'client',fb:'✗ Nunca como TS estándar. El flujo indica Restablecer ajustes de RED (no fábrica). El restablecimiento de fábrica solo si el área técnica lo indica después del ticket.'},
-    {t:'Si llegamos aquí ya no hay más que hacer, hay que escalar.',q:'mala',a:'none',fb:'✗ Restablecer ajustes de red es el paso 4 obligatorio antes del ticket. No se puede escalar sin completar el flujo completo.'},
+    {t:'En Ajustes busque la opción de Restablecer datos de fábrica — solo afecta configuraciones, no sus archivos personales.',q:'mala',a:'client',fb:'✗ "Restablecer datos de fábrica" borra TODO el contenido del equipo. El paso correcto es "Restablecer configuración de red", que solo limpia ajustes de conectividad sin afectar archivos ni apps.'},
+    {t:'Vamos a limpiar el caché de la aplicación de datos de su dispositivo para que se reconfigure.',q:'mala',a:'client',fb:'✗ Limpiar caché de una app no es el paso 4 del flujo. El procedimiento oficial es restablecer la configuración de red completa desde Ajustes → Sistema → Restablecer.'},
   ]},
 
 
@@ -557,7 +564,7 @@ empatia_ts:{cat:'EMPATÍA',tipo:'opts',label:'Empatía · Durante el proceso té
     {t:'Le agradezco mucho que me acompañe en este proceso. Sé que llevamos un momento en la llamada y eso tiene un valor. Cada paso que hacemos nos acerca a identificar la causa exacta. Ya estamos casi listos, ¿me permite continuar?',q:'buena',a:'client',fb:'✓ Correcto. Reconoces el tiempo del cliente, explicas el propósito de los pasos y pides continuar de forma natural. El cliente siente que su esfuerzo importa.'},
     {t:'Gracias por su paciencia. Estos pasos los realizamos para descartar causas una por una y encontrar la solución correcta, no solo parches temporales. Ya estamos llegando al final del proceso.',q:'buena',a:'client',fb:'✓ Correcto. Justificas por qué se hacen los pasos con un argumento de valor real: solución definitiva, no temporal. El cliente entiende y confía.'},
     {t:'Tranquilo, esto es normal, pasa seguido con estos equipos.',q:'mala',a:'client',fb:'✗ "Pasa seguido" genera desconfianza en el servicio y en el equipo. Nunca normalizar la falla como algo común. Mejor: "Vamos a identificar la causa exacta para resolverlo correctamente."'},
-    {t:'Si no funciona este paso vamos a tener que escalar a otra área.',q:'mala',a:'none',fb:'✗ Anticipar el fracaso durante el proceso genera ansiedad en el cliente. Mantén siempre una actitud de solución. El ticket se menciona solo cuando el TS está completo y no resolvió.'},
+    {t:'Gracias por esperarme. Como último recurso vamos a intentar este paso, y si no funciona le escalamos.',q:'mala',a:'client',fb:'✗ Presentar el paso como "último recurso" anticipa el fracaso. Cada paso tiene un propósito claro; comunícalo como parte normal del proceso, no como desesperación.'},
   ]},
 
 datos_tscheck:{cat:'TS · VERIFICACIÓN',tipo:'opts',label:'Verificación · Confirmar resultado del TS con el cliente',ts:'Verificar si TS resolvió (antes del ticket)',
@@ -569,7 +576,7 @@ datos_tscheck:{cat:'TS · VERIFICACIÓN',tipo:'opts',label:'Verificación · Con
       {t:`Ya realizamos todos los pasos del proceso. Le pido que ${prueba}.`,q:'buena',a:'client',fb:'✓ Correcto. Solicitas prueba en vivo específica al servicio afectado antes de decidir si escalar. Así y solo así se confirma si el TS resolvió.'},
       {t:`Antes de continuar, necesito que ${prueba2}. Eso nos confirmará si el proceso funcionó.`,q:'buena',a:'client',fb:'✓ Correcto. Prueba específica e inmediata. El resultado define el siguiente paso: cierre o ticket Remedy.'},
       {t:'Con los pasos que hicimos ya debe estar resuelto. Procedemos a cerrar.',q:'mala',a:'none',fb:'✗ Nunca asumir que resolvió. El cliente debe hacer una prueba en vivo y confirmar. Si no verifica, puede cerrar un caso que sigue sin funcionar.'},
-      {t:'Voy a levantar el ticket ahora por si acaso, aunque no lo hemos verificado.',q:'mala',a:'none',fb:'✗ El ticket solo se genera si el cliente confirma que persiste después del TS. Primero siempre la prueba en vivo con el cliente.'},
+      {t:'El ticket ya está generado, le daré el folio y el área técnica se comunicará en 24 horas.',q:'mala',a:'none',fb:'✗ El ticket no debe generarse sin antes pedir al cliente que haga una prueba en vivo. Si el TS resolvió, no se levanta ticket. Primero verificar con el cliente.'},
     ];
   }},
 
@@ -716,8 +723,9 @@ verificacion:{cat:'VERIFICACIÓN',tipo:'opts',label:'Verificación · Responder 
   opts:[
     {t:'El área técnica revisará su caso a fondo y se comunicará con usted en un plazo de 24 a 48 horas hábiles. Le llegará una notificación cuando haya una actualización. Su folio de atención es su número de seguimiento — con él puede llamarnos en cualquier momento y le daremos el estatus exacto de su caso.',q:'buena',a:'client',fb:'✓ Correcto. Respondes de forma concreta y empática: das el tiempo, confirmas el aviso, y le das el control al cliente con el folio. El cliente no queda en incertidumbre.'},
     {t:'En 24 a 48 horas hábiles el equipo técnico le contactará con la resolución. Si en ese plazo no recibe respuesta, puede llamarnos con su número de folio y le damos seguimiento de inmediato. Estamos pendientes de su caso.',q:'buena',a:'client',fb:'✓ Correcto. Das el tiempo, estableces un plan de acción si no hay respuesta, y transmites que el caso está siendo monitoreado. El cliente siente respaldo.'},
-    {t:'En 48 horas le resuelven. No se preocupe.',q:'mala',a:'none',fb:'✗ "No se preocupe" sin contexto suena a descarte. Además no le dices cómo dar seguimiento si no recibe respuesta. El cliente necesita saber qué hacer si pasan las 48 hrs y no lo contactan.'},
-    {t:'No sé exactamente cuándo, depende del área técnica.',q:'mala',a:'none',fb:'✗ Transmite incertidumbre y falta de control sobre el proceso. Siempre comunicar el rango de 24-48 hrs hábiles y dar el folio como herramienta de seguimiento.'},
+    {t:'El área técnica trabajará en su caso y le contactará cuando tenga una resolución. No es necesario que vuelva a llamar, ellos se comunicarán con usted.',q:'mala',a:'none',fb:'✗ Decirle al cliente que no llame lo deja sin herramienta de seguimiento. Siempre dar el folio e indicar que puede llamar con ese número en cualquier momento si necesita el estatus.'},
+    {t:'Le recomiendo estar pendiente de sus mensajes de texto, ahí recibirá la notificación con la resolución del ticket.',q:'mala',a:'none',fb:'✗ No se puede garantizar que las notificaciones lleguen por SMS. El canal correcto es dar el folio verbalmente para que el cliente pueda dar seguimiento llamando si no recibe respuesta en 48 hrs hábiles.'},
+    {t:'El tiempo depende de qué tan complejo resulte ser el problema una vez que el área técnica lo revise. Puede ser desde horas hasta algunos días.',q:'mala',a:'none',fb:'✗ Un rango indeterminado genera incertidumbre. El compromiso estándar es 24 a 48 horas hábiles — ese rango debe comunicarse con precisión junto con el folio de seguimiento.'},
   ]},
 
 
@@ -924,9 +932,9 @@ function clientReply(phKey){
     case 'sondeo_tipo': return {
       datos:{
         enojado:[
-          '¡No me carga nada! WhatsApp, el navegador, ninguna app funciona. Los datos están encendidos pero es como si no tuviera.',
-          'Nada, absolutamente nada. Ni WhatsApp ni el navegador ni ninguna aplicación. Los datos aparecen activos pero no sirven.',
-          '¡Todo! No carga ninguna app, ni el navegador, ni redes sociales. Nada de internet funciona.',
+          '¡Nada! Ni WhatsApp ni internet ni nada. Y el ícono dice que sí tengo datos. Ya estoy harto.',
+          '¿Qué cree que falla? ¡Todo! Llevo días así y nadie resuelve nada.',
+          '¡Todo falla! WhatsApp, el navegador, todo. Esto ya es demasiado.',
         ],
         neutro:[
           'El problema es con los datos. No puedo navegar en ninguna app aunque el ícono está activo. Las llamadas sí me funcionan.',
@@ -968,14 +976,14 @@ function clientReply(phKey){
       },
     }[fam]?.[mood]||[];
     case 'val_equipo': return [`Es un ${sd.equipo?.modelo||'teléfono Android'}.`];
-    case 'val_oferta': return ['Sí, tengo un plan activo. Pago mensualmente. ¿Hay algún problema con mi plan?'];
-    case 'val_sim': return [sd.view360?.estatus&&sd.view360.estatus!=='Activo'?'No sé por qué estaría suspendida. Yo pago al corriente. ¿Qué pasó?':'Sí, la SIM está bien puesta. Es la misma que siempre he tenido.'];
+    case 'val_oferta': return [mood==='enojado'?rOf(['Claro que tengo plan y lo pago. ¿Por qué siempre preguntan eso?','Sí, activo y al corriente. Ese no es el problema.','Sí pago. No me digan que eso falló también.']):[rOf(['Sí, tengo plan activo. Pago mensual.','Sí, tengo un plan vigente.','Sí, hay plan activo.'])][0]];
+    case 'val_sim': return [sd.view360?.estatus&&sd.view360.estatus!=='Activo'?rOf(['¿Cómo que suspendida? ¡Acabo de pagar! Esto es un error de ustedes.','No puede estar suspendida, pago puntual. ¿Qué hicieron?','¡Yo pago! ¿Por qué la suspendieron sin avisarme?']):rOf(['Sí, la SIM está bien.','Sí, está puesta como siempre.','Claro que sí tiene SIM.'])];
     case 'val_cobertura': return [`Estoy en ${sd.cobertura?.zona||'la ciudad'}. Normalmente tengo buena señal aquí.`];
     case 'ts_selector': return {
       enojado:[
-        'Está bien, esperemos que eso funcione. Llevo días con esto.',
-        'Bueno, ojalá que con esos pasos se resuelva. ¿Y cuánto tardará?',
-        'De acuerdo, hágale. Solo espero que esto se resuelva hoy.',
+        '¿Cuánto tiempo más? Ya llevo días con esto y nadie resuelve.',
+        'Si no funciona ahora quiero hablar con un supervisor.',
+        'Hágale rápido porque no tengo todo el día.',
       ],
       neutro:[
         'Entendido, con gusto le sigo los pasos. ¿Por dónde empezamos?',
@@ -991,7 +999,7 @@ function clientReply(phKey){
     case 'diag_datos': return ['En todas las aplicaciones. WhatsApp no carga, el navegador tampoco. Nada de internet.'];
     case 'datos_activar': return [
       src==='equipo'
-        ?rOf(['Sí, está encendido. El interruptor de datos está en azul.','Sí, los datos están activos. El interruptor está encendido.','Ya revisé, los datos sí están prendidos.'])
+        ?rOf(mood==='enojado'?['Sí, están prendidos. Eso ya lo revisé antes de llamar.','Claro que sí, lo primero que hice. No son los datos.','Ya sé que están encendidos, no soy nuevo en esto.']:['Sí, está encendido.','Sí, los datos están activos.','Ya revisé, sí están prendidos.'])
         :rOf(['Sí están activos, pero igual no carga nada.','Están encendidos y aun así no funciona el internet.','Sí, los datos están prendidos y aun no me carga nada.'])
     ];
     case 'datos_modo_red': return [
@@ -1034,7 +1042,7 @@ function clientReply(phKey){
         ?rOf(['¡Sí, ya funciona! Cargó WhatsApp y todo.','Ya cargó. ¡Qué alivio, muchas gracias!','¡Sí! Ya tengo internet. Gracias.'])
         :rOf(['No, sigue sin funcionar.','Todavía no me carga nada.','No, igual. Sigue sin internet.'])
     ];
-    case 'datos_ticket': return ['Entendido. ¿En cuánto tiempo se resolverá? ¿Me llega algún aviso?'];
+    case 'datos_ticket': return [mood==='enojado'?rOf(['¿48 horas?! ¿Me está tomando el pelo? ¡Necesito internet ya!','No acepto 48 horas. Quiero hablar con su supervisor ahora.','Dos días más sin internet — ¿eso es lo mejor que pueden hacer?']):rOf(['Entendido. ¿Cuándo me resuelven? ¿Me llega aviso?','¿Me dan un folio para darle seguimiento?'])];
     case 'diag_llamadas': return [src==='linea'?'Las salientes no puedo hacer. Las entrantes tampoco llegan. Con todos los operadores.':'No puedo hacer llamadas. Cuando marco no conecta o me dice que no se puede realizar la llamada.'];
     case 'llamadas_datos': return [rOf(['Sí, están encendidos. De hecho tengo internet.','Sí, el interruptor está en azul.','Sí, los datos están activos. El internet sí funciona.'])];
     case 'llamadas_volte': return [
@@ -1050,7 +1058,7 @@ function clientReply(phKey){
     case 'llamadas_bloqueados': return [rOf(['No hay nadie bloqueado. Y con el #31# tampoco funcionó.','Revisé bloqueados y nada. El #31# tampoco ayudó.','No tengo números bloqueados y el código #31# no cambió nada.'])];
     case 'llamadas_modo_red': return [src==='equipo'?rOf(['Estaba en 3G, ya lo cambié a 4G. ¿Llamo?','Decía 3G, lo puse en 4G. ¿Pruebo?']):rOf(['Ya estaba en 4G.','El modo de red ya estaba en 4G.'])];
     case 'llamadas_tscheck': return [src==='equipo'?rOf(['¡Sí, conectó! Ya funciona.','¡Qué bueno, ya pude llamar!','Funcionó. Muchas gracias.']):rOf(['No, sigue sin funcionar.','Todavía no conecta.','No, igual no puedo llamar.'])];
-    case 'llamadas_ticket': return ['¿En cuánto tiempo me resuelven esto? ¿Me llaman de regreso?'];
+    case 'llamadas_ticket': return [mood==='enojado'?rOf(['¿48 horas sin poder llamar? No es justo.','¿Y en ese tiempo qué hago? Trabajo con el teléfono.','Espero que sí llamen, porque si no vuelvo a llamar.']):rOf(['¿Cuánto tardan? ¿Me contactan?','¿Me dan número de folio?'])];
     case 'diag_sms': return ['No puedo ni enviar ni recibir mensajes. Con todos los contactos.'];
     case 'sms_smsc': return [rOf(['Encontré el Centro de Mensajes. El número que dice ahí es diferente. ¿Lo cambio por el que me dijo?','Aquí está el Centro de Mensajes. No es el mismo número. ¿Pongo el +525584611810?','Lo encontré. El número que aparece no es ese. ¿Lo cambio?'])];
     case 'sms_ticket': return ['Entendido. ¿Cuánto tarda?'];
@@ -1059,7 +1067,7 @@ function clientReply(phKey){
     case 'a2p_reporte': return ['Sí, ya hablé con el banco y dijeron que el mensaje sí fue enviado desde su lado.'];
     case 'a2p_ticket': return ['¿Cuánto tardará? Necesito ese código para operaciones urgentes.'];
     case 'verificacion': return [rOf(['Entendido. Gracias por explicarme.','Ok, estaré pendiente. Gracias.','Está bien, quedo en espera entonces.','De acuerdo, muchas gracias.'])];
-    case 'cierre': return {enojado:['Órale. Espero que sí quede esta vez.','Bueno, gracias. Que sea rápido.','Ok. Hasta luego.'],neutro:['Muchas gracias. Hasta luego.','Gracias, buen día.','Ok, muchas gracias.'],tranquilo:['Gracias, muy amable. Buen día.','Muchas gracias por todo. Hasta luego.','Con gusto. Gracias y buen día.']}[mood]||[];
+    case 'cierre': return {enojado:['Okay. Espero que sí resuelvan esta vez.','Bueno. Si en 48 horas no hay respuesta vuelvo a llamar.','Está bien. Ojalá sea rápido.'],neutro:['Muchas gracias. Hasta luego.','Gracias, buen día.','Ok, muchas gracias.'],tranquilo:['Gracias, muy amable. Buen día.','Muchas gracias por todo. Hasta luego.','Con gusto. Gracias y buen día.']}[mood]||[];
   }
   return {enojado:['¿Y eso cuánto tiempo va a tardar?','¿Por qué pasa esto?'],neutro:['Entendido. ¿Y qué sigue?','De acuerdo.'],tranquilo:['Perfecto, ¿qué más necesito?','Entendido. Gracias.']}[mood]||[];
 }
@@ -1166,7 +1174,7 @@ function lq(i){const s=QUICK[i];launchSim('simulacion',s.fam,s.mood);}
 
 /* LANZAR SIMULACIÓN */
 function launchSim(mode,fam,mood){
-  G.mode=mode;G.fam=fam;G.mood=mood||'neutro';G.lm=mode;G.lf=fam;G.exam=mode==='examen';
+  G.mode=mode;G.fam=fam;G.mood=(mode==='examen'?'enojado':mood)||'neutro';G.lm=mode;G.lf=fam;G.exam=mode==='examen';
   G.ending=false;G.sel=[];G.tools=new Set();G.idx=0;G.apnResolved=false;
   G.src=SF.includes(fam)?(Math.random()<.5?'equipo':'linea'):'linea';
   const fk=SF.includes(fam)?fam+'_'+G.src:fam;
@@ -1177,6 +1185,8 @@ function launchSim(mode,fam,mood){
 
   const mc=mood==='enojado'?'ctag-e':mood==='tranquilo'?'ctag-t':'ctag-n';
   const ml={simulacion:'🌱 Nivel Básico',tecnica:'🚀 Nivel Avanzado',examen:'🎯 Modo Examen'}[mode]||mode;
+  document.querySelector('.sidebar').style.display=G.exam?'none':'';
+  document.querySelector('.simwrap').style.gridTemplateColumns=G.exam?'1fr':'1fr 285px';
   document.getElementById('ctags').innerHTML=
     `<span class="ctag ${mc}">${mood[0].toUpperCase()+mood.slice(1)}</span>
      <span class="ctag ctag-m">${ml}</span>`+
@@ -1208,6 +1218,7 @@ function renderPhase(){
   document.getElementById('bnext').classList.remove('on');
   hideFB(); hideInputs(); markCurTs(ph.ts);
   if(!G.exam&&ph.hint) document.getElementById('stip').textContent=ph.hint;
+  else if(G.exam) document.getElementById('stip').textContent='';
 
   // mixed siempre muestra libre (con refs abajo). Básico: opts. Avanzado: libre sin refs. Examen: libre sin refs ni kws.
   const tipo = ph.tipo==='mixed' ? 'libre' : ph.tipo;
@@ -1222,7 +1233,16 @@ function hideInputs(){
 
 /* OPCIONES MÚLTIPLES */
 function renderOpts(ph){
-  const sh=[...ph.opts.map((o,i)=>({...o,oi:i}))].sort(()=>Math.random()-.5);
+  let pool=ph.opts.map((o,i)=>({...o,oi:i}));
+  if(G.exam){
+    // Examen: exactamente 4 opciones — 1 correcta (al azar) + 3 incorrectas (al azar)
+    const buenas=pool.filter(o=>o.q==='buena');
+    const malas=pool.filter(o=>o.q!=='buena');
+    const unabuena=buenas[Math.floor(Math.random()*buenas.length)];
+    const tresMalas=malas.sort(()=>Math.random()-.5).slice(0,3);
+    pool=[unabuena,...tresMalas];
+  }
+  const sh=[...pool].sort(()=>Math.random()-.5);
   document.getElementById('og').innerHTML=sh.map(o=>
     `<button class="obtn" onclick="selOpt(${o.oi})" data-i="${o.oi}">${o.t}</button>`
   ).join('');
